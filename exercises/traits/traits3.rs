@@ -8,11 +8,11 @@
 // Execute `rustlings hint traits3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// DONE
 
 pub trait Licensed {
     fn licensing_info(&self) -> String{
-        String::from("Some information")
+        "Some information".to_string()
     }
 }
 
