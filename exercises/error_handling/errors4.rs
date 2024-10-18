@@ -5,8 +5,8 @@
 
 // DONE
 
-#![feature(f16)]
-use std::f16::consts::E;
+// #![feature(f16)]
+// use std::f16::consts::E;
 
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
