@@ -13,10 +13,10 @@
 
 // DONE
 
-#![feature(portable_simd)]
+// #![feature(portable_simd)]
 
 use std::collections::HashMap;
-use std::simd::u32x1;
+// use std::simd::u32x1;
 
 fn fruit_basket() -> HashMap<String, u32> {
     // let mut basket = // TODO: declare your hash map here.
@@ -24,7 +24,7 @@ fn fruit_basket() -> HashMap<String, u32> {
     // Two bananas are already given for you :)
     basket.insert(String::from("banana"), 2);
     basket.insert(String::from("apple"), 1);
-    basket.insert(String::from("watermelon"), 3);
+    basket.insert(String::from("watermelon"), 4);
 
     // TODO: Put more fruits in your basket here.
 

@@ -16,8 +16,8 @@
 
 // DONE
 
-#![feature(stdarch_x86_avx512)]
-use std::arch::x86_64::_mm512_mask_scalef_round_pd;
+// #![feature(stdarch_x86_avx512)]
+// use std::arch::x86_64::_mm512_mask_scalef_round_pd;
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
