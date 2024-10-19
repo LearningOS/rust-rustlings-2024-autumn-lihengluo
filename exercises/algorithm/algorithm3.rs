@@ -3,10 +3,26 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
+// DONE
 
-fn sort<T>(array: &mut [T]){
-	//TODO
+use std::convert::TryInto;
+
+fn sort<T: std::cmp::PartialOrd>(array: &mut [T]){
+	// insertion sort
+    let size: usize = array.len();
+    if size <= 1 {
+        return ;
+    }
+    else {
+        for i  in 0..size{
+            for j in (i+1)..size{
+                if array[i as usize] > array[j as usize]{
+                    array.swap(i, j);
+                }
+            }
+        }
+    }
+
 }
 #[cfg(test)]
 mod tests {

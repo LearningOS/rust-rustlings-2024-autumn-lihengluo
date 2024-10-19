@@ -1,9 +1,3 @@
-/*
-	heap
-	This question requires you to implement a binary heap function
-*/
-// I AM NOT DONE
-
 use std::cmp::Ord;
 use std::default::Default;
 
@@ -13,7 +7,7 @@ where
 {
     count: usize,
     items: Vec<T>,
-    comparator: fn(&T, &T) -> bool,
+    comparator: fn(&T, &T) -> bool, // Determines whether this is a MinHeap or MaxHeap
 }
 
 impl<T> Heap<T>
@@ -23,7 +17,7 @@ where
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
             count: 0,
-            items: vec![T::default()],
+            items: vec![T::default()], // Start with a dummy element at index 0
             comparator,
         }
     }
@@ -37,7 +31,24 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        // Add the new value at the end of the heap
+        self.items.push(value);
+        self.count += 1;
+
+        // Restore the heap property by heapifying up
+        self.heapify_up(self.count);
+    }
+
+    fn heapify_up(&mut self, mut idx: usize) {
+        while idx > 1 {
+            let parent_idx = self.parent_idx(idx); // Extract parent index first to avoid borrowing conflicts
+            if (self.comparator)(&self.items[idx], &self.items[parent_idx]) {
+                self.items.swap(idx, parent_idx); // Now safe to swap
+            } else {
+                break;
+            }
+            idx = parent_idx;
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +68,26 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        let left = self.left_child_idx(idx);
+        let right = self.right_child_idx(idx);
+
+        if right <= self.count && (self.comparator)(&self.items[right], &self.items[left]) {
+            right
+        } else {
+            left
+        }
+    }
+
+    fn heapify_down(&mut self, mut idx: usize) {
+        while self.children_present(idx) {
+            let smallest_child = self.smallest_child_idx(idx);
+            if (self.comparator)(&self.items[smallest_child], &self.items[idx]) {
+                self.items.swap(idx, smallest_child);
+                idx = smallest_child;
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -84,8 +113,21 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+
+        // Swap the root (top) with the last element
+        self.items.swap(1, self.count);
+        let result = self.items.pop(); // Remove the last element
+        self.count -= 1;
+
+        // Restore the heap property by heapifying down from the root
+        if self.count > 0 {
+            self.heapify_down(1);
+        }
+
+        result
     }
 }
 
@@ -116,6 +158,7 @@ impl MaxHeap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_empty_heap() {
         let mut heap = MaxHeap::new::<i32>();
